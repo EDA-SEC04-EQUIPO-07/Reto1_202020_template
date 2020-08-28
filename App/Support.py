@@ -5,16 +5,27 @@ from ADT import list as lt
 from DataStructures import listiterator as it
 from DataStructures import liststructure as lt
 
+#sorted implementado
+
+def sort(lst, criteria, opcion):
+    if criteria.lower() == 'vote':
+        return('Sea mas especifico con el criterio.') 
+    elif criteria.lower() in 'vote_average':
+        if opcion == '1':
+            sup.mergesort(lst, lessfunction='lessfunctionAvrg')
+        elif opcion == '2':
+            sup.mergesort(lst, lessfunction='greaterfunctionAvrg')
+    elif criteria.lower() in 'vote_count':
+        if opcion == '1':
+            sup.mergesort(lst, lessfunction='lessfunctionCount')
+        elif opcion == '2':
+            sup.mergesort(lst, lessfunction='greaterfunctionCount')
+
 #sorted
-def cmpfuction(element1, element2, opcion):
-    if opcion == '1':
-        lessfunction(element1, element2)
-    elif opcion == '2':
-        greaterfunction(element1, element2)
 
-
-
-def lessfunction(element1, element2):
+def lessfunctionCount(element1, element2):
+    element1=element1['vote_count']
+    element2=element2['vote_count']
     if element1 == element2:
         return 0
     elif element1 < element2:
@@ -22,11 +33,33 @@ def lessfunction(element1, element2):
     else: 
         return -1
 
-def greaterfunction(element1, element2):
+def greaterfunctionCount(element1, element2):
+    element1=element1['vote_count']
+    element2=element2['vote_count']
     if element1 == element2:
         return 0
     elif element1 > element2:
         return 1
+    else: 
+        return -1
+
+def lessfunctionAvrg(element1, element2):
+    element1=element1['vote_average']
+    element2=element2['vote_average']
+    if element1 < element2:
+        return 1
+    elif element1 == element2:
+        return 0
+    else: 
+        return -1
+
+def greaterfunctionAvrg(element1, element2):
+    element1=element1['vote_average']
+    element2=element2['vote_average']
+    if element1 > element2:
+        return 1
+    elif element1 == element2:
+        return 0
     else: 
         return -1
     
@@ -92,6 +125,11 @@ def findmovieId(Id, lst):
         return movie
     else:
         return ('No movie match with ID')
+
+def newCatalog():
+    catalog=lt.newList(datastructure='ARRAY_LIST')
+    return catalog
+
                  
 #sorting
 

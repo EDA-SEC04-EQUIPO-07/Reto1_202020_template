@@ -48,7 +48,7 @@ def compareRecordIds(recordA, recordB):
 
 
 def loadCSVFile (file, lst):
-    lst=lt.newList("ARRAY_LIST")
+    lst=lt.newList(datastructure="ARRAY_LIST")
     dialect = csv.excel()
     dialect.delimiter=";"
     try:
@@ -66,15 +66,29 @@ def loadMovies (file, lst):
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
-def findgoodMovies(lst, lst2, director_name):
-    """
-    """
+def FindGoodMovie(lst,lst2,name_director):
+    "Retorna: el numero de películas buenas de un director y su promedio de la votación."
+    list_movies=[]
+    info_movies= sup.findmoviesDirector(name_director, lst)
+    avgsum=0
+    for movie in info_movies:
+        movie_data=sup.findmovieId(movie['id'], lst2)
+        if movie_data["vote_average"] >= 6:
+            list_movies.append(movie_data['title'])
+            avgsum+=movie_data['vote_average']
+    size=len(list_movies)
+    avg=avgsum/size
+    return(size,avg)
 
 
-def rankingMovies(lst, lst2, criteria):
+
+def rankingMovies(lst, criteria, opcion):
     """
-    Genera rankings ("contruyendose")
+    Genera rankings ("contruccion")
     """
+    catalog=lt.newList(datastructure='ARRAY_LIST')
+    lst_sort=sup.sort(lst, criteria, opcion)
+
 
 
 def SearchbyDirector(lst,lst2,name_director):
@@ -187,6 +201,8 @@ def main():
     """
     lista_1=[]
     lista_2=[]
+    best_10=[]
+    worst_5=[]
     while True:
         printMenu() #imprimir el menu de opciones en consola
         inputs =input('Seleccione una opción para continuar\n') #leer opción ingresada
@@ -194,7 +210,7 @@ def main():
             if int(inputs[0])==1: #opcion 1
                 opcion=input('Selecione la lista de datos que desea cargar\n')
                 if opcion == '1':
-                    lista_1=loadMovies('Cadena de los datos', lista_1)
+                    lista_1=loadMovies('Data\moviesdb\MoviesCastingRaw-small.csv', lista_1)
                 elif opcion == '2':
                     lista_2=loadMovies('Data\moviesdb\SmallMoviesDetailsCleaned.csv', lista_2)
                 else:
