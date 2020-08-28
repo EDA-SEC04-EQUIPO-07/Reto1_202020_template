@@ -71,7 +71,7 @@ def findgoodMovies(lst, lst2, director_name):
 
 def rankingMovies():
     """
-    Genera rankings ("contruyendose")
+    Genera rankings ("contruccion")
     """
 
 def SearchbyDirector(lst,lst2,name_director):
