@@ -47,8 +47,8 @@ def compareRecordIds(recordA, recordB):
     return -1
 
 
-def loadCSVFile (file, cmpfunction):
-    lst=lt.newList("ARRAY_LIST", cmpfunction)
+def loadCSVFile (file, lst):
+    lst=lt.newList("ARRAY_LIST")
     dialect = csv.excel()
     dialect.delimiter=";"
     try:
@@ -61,17 +61,21 @@ def loadCSVFile (file, cmpfunction):
     return lst
 
 
-def loadMovies (file, lst, cmpfunction):
-    lst = loadCSVFile(file ,cmpfunction) 
+def loadMovies (file, lst):
+    lst = loadCSVFile(file, lst) 
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
-def findgoodMovies(lst, lst2, director_name)
+def findgoodMovies(lst, lst2, director_name):
+    """
+    """
 
-def rankingMovies():
+
+def rankingMovies(lst, lst2, criteria):
     """
     Genera rankings ("contruyendose")
     """
+
 
 def SearchbyDirector(lst,lst2,name_director):
     """
@@ -182,7 +186,7 @@ def main():
     Return: None 
     """
     lista_1=[]
-    lista2=[]
+    lista_2=[]
     while True:
         printMenu() #imprimir el menu de opciones en consola
         inputs =input('Seleccione una opción para continuar\n') #leer opción ingresada
@@ -190,9 +194,9 @@ def main():
             if int(inputs[0])==1: #opcion 1
                 opcion=input('Selecione la lista de datos que desea cargar\n')
                 if opcion == '1':
-                    lista_1=loadMovies('Cadena de los datos', lista_1, sup.cmpfuction)
+                    lista_1=loadMovies('Cadena de los datos', lista_1)
                 elif opcion == '2':
-                    lista_2=loadMovies('Direccion de archivo', lista_2, sup.cmpfuction)
+                    lista_2=loadMovies('Data\moviesdb\SmallMoviesDetailsCleaned.csv', lista_2)
                 else:
                     print('Esa opcion no es valida')
             elif int(inputs[0])==2: #opcion 2
