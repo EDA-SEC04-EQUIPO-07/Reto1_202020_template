@@ -66,7 +66,8 @@ def loadMovies (file, lst, cmpfunction):
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
-def findgoodMovies(lst, lst2, director_name)
+def findgoodMovies(lst, lst2, director_name):
+    return("")
 
 def rankingMovies():
     """

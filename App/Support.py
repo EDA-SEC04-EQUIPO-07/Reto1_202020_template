@@ -7,7 +7,8 @@ from DataStructures import liststructure as lt
 def cmpfuction(element1, element2, opcion):
     if opcion == '1':
         lessfunction(element1, element2)
-    elif opcion == '2'
+        
+    elif opcion == '2':
         greaterfunction(element1, element2)
 
 
