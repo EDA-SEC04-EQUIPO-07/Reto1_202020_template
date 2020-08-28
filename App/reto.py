@@ -25,42 +25,26 @@
 """
   Este módulo es una aplicación básica con un menú de opciones para cargar datos, contar elementos, y hacer búsquedas sobre una lista .
 """
+#imports
 
 import config as cf
 import sys
 import csv
+import Support as sup
 
 from ADT import list as lt
 from DataStructures import listiterator as it
 from DataStructures import liststructure as lt
-
 from time import process_time 
 
+#Funciones
 
-
-def printMenu():
-    """
-    Imprime el menu de opciones
-    """
-    print("\nBienvenido")
-    print("1- Cargar Datos")
-    print("2- Ranking de peliculas")
-    print("3- Conocer un director")
-    print("4- Conocer un actor")
-    print("5- Entender un genero")
-    print("6- Crear ranking")
-    print("0- Salir")
-
-
-
-
-def compareRecordIds (recordA, recordB):
+def compareRecordIds(recordA, recordB):
     if int(recordA['id']) == int(recordB['id']):
         return 0
     elif int(recordA['id']) > int(recordB['id']):
         return 1
     return -1
-
 
 
 def loadCSVFile (file, cmpfunction):
@@ -77,11 +61,117 @@ def loadCSVFile (file, cmpfunction):
     return lst
 
 
-def loadMovies ():
-    lst = loadCSVFile("theMoviesdb/movies-small.csv",compareRecordIds) 
+def loadMovies (file, lst, cmpfunction):
+    lst = loadCSVFile(file ,cmpfunction) 
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
+def findgoodMovies(lst, lst2, director_name)
+
+def rankingMovies():
+    """
+    Genera rankings ("contruyendose")
+    """
+
+def SearchbyDirector(lst,lst2,name_director):
+    """
+    Busca todas las peliculas en las que un director trabajo.
+    Arg:
+        -lst :: list 
+            La informacion en bruto de las peliculas.
+        -lst2 :: list 
+            La informacion especifica de las peliculas.
+        -name_director :: str
+            El nombre del director.
+    
+    Retorna :: tuple 
+        -Todas las películas dirigidas, El numero de las películas 
+        y El promedio de la calificación de sus películas.
+    """
+    avgsum= 0
+    info_movies=sup.findmoviesDirector(name_director, lst)
+    size=len(info_movies)
+    list_movies=[]
+    for movie in info_movies:
+        movie_data=sup.findmovieId(movie['id'], lst2)
+        list_movies.append(movie_data['title'])
+        avgsum+=movie_data['vote_average']
+    avg=avgsum/size
+    return(list_movies,size,avg)
+
+def SearchbyActor(lst,lst2,actor_name):
+    """
+    Busca todas las peliculas en las que un actor participo.
+    Arg:
+        -lst :: list 
+            -La informacion en bruto de las pelicula.
+        -lst2 :: list
+            -La informacion especifica de las peliculas.
+        -actor_name :: str 
+            -Nombre del actor buscado
+    retorna :: tuple 
+        -Todas las películas en las que actuo, el numero de las películas, 
+        el promedio de calificacion y el director con el que mas trabajo en ese orden.
+    """
+    avgsum= 0
+    info_movies=sup.findmoviesActor(actor_name, lst)
+    size=len(info_movies)
+    list_movies=[]
+    dict_directors={}
+    for movie in info_movies:
+        name_director=movie['director_name']
+        movie_data=sup.findmovieId(movie['id'], lst2)
+        list_movies.append(movie_data['title'])
+        avgsum+=movie_data['vote_average']
+        if name_director in dict_directors.keys():
+            dict_directors[name_director]+=1
+        else:
+            dict_directors[name_director]=1
+    director= max(dict_directors)
+    avg=avgsum/size
+    return(list_movies,size,avg,director)
+
+def meetGenre(lst, lst2, genre):
+    """
+    Busca todas las peliculas que corresponden al genero dado por parametro.
+    Arg:
+        lst :: list
+            -La informacion en bruto de las peliculas.
+        lst2 :: list
+            -La informacion especifica de las peliculas.
+        genre :: str
+            -El genero que se desea buscar.
+    Retorna :: tuple
+        -El titulo de las peliculas, el numero de peliculas y la votacion promedio en ese orden.
+    """
+    avgsum=0
+    info_movies=sup.findmoviesGenre(genre, lst2)
+    list_movies=[]
+    size=len(info_movies)
+    i=0
+    while i < size:
+        list_movies.append(info_movies[i]['title'])
+        avgsum+=info_movies[i]['vote_count']
+        i+=1
+    avgsum=avgsum/size
+    return(list_movies, size, avgsum)
+
+
+
+#menu
+
+def printMenu():
+    """
+    Imprime el menu de opciones
+    """
+    print("\nBienvenido")
+    print("1- Cargar Datos")
+    print("2- Ranking de peliculas")
+    print("3- Conocer un director")
+    print("4- Conocer un actor")
+    print("5- Entender un genero")
+    print("6- Crear ranking")
+    print("0- Salir")
 
 def main():
     """
@@ -91,16 +181,20 @@ def main():
     Args: None
     Return: None 
     """
-
-
+    lista_1=[]
+    lista2=[]
     while True:
         printMenu() #imprimir el menu de opciones en consola
         inputs =input('Seleccione una opción para continuar\n') #leer opción ingresada
         if len(inputs)>0:
-
             if int(inputs[0])==1: #opcion 1
-                lstmovies = loadMovies()
-
+                opcion=input('Selecione la lista de datos que desea cargar\n')
+                if opcion == '1':
+                    lista_1=loadMovies('Cadena de los datos', lista_1, sup.cmpfuction)
+                elif opcion == '2':
+                    lista_2=loadMovies('Direccion de archivo', lista_2, sup.cmpfuction)
+                else:
+                    print('Esa opcion no es valida')
             elif int(inputs[0])==2: #opcion 2
                 pass
 
