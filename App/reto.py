@@ -66,8 +66,20 @@ def loadMovies (file, lst, cmpfunction):
     print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
     return lst
 
-def findgoodMovies(lst, lst2, director_name):
-    return("")
+def FindGoodMovie(lst,lst2,name_director):
+    "Retorna: el numero de películas buenas de un director y su promedio de la votación."
+    list_movies=[]
+    info_movies= sup.findmoviesDirector(name_director, lst)
+    avgsum=0
+    for movie in info_movies:
+        movie_data=sup.findmovieId(movie['id'], lst2)
+        if movie_data["vote_average"] >= 6:
+            list_movies.append(movie_data['title'])
+            avgsum+=movie_data['vote_average']
+    size=len(list_movies)
+    avg=avgsum/size
+    return(size,avg)
+
 
 def rankingMovies():
     """
