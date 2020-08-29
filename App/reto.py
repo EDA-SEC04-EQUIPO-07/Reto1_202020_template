@@ -75,7 +75,7 @@ def FindGoodMovie(lst,lst2,name_director):
         movie_data=sup.findmovieId(movie['id'], lst2)
         if movie_data["vote_average"] >= 6:
             list_movies.append(movie_data['title'])
-            avgsum+=int(movie_data['vote_average'])
+            avgsum+=float(movie_data['vote_average'])
     size=len(list_movies)
     avg=avgsum/size
     return(size,avg)
@@ -138,7 +138,7 @@ def SearchbyDirector(lst,lst2,name_director):
     for movie in info_movies:
         movie_data=sup.findmovieId(movie['id'], lst2)
         list_movies.append(movie_data['title'])
-        avgsum+=int(movie_data['vote_average'])
+        avgsum+=float(movie_data['vote_average'])
     avg=avgsum/size
     return(list_movies,size,avg)
 
@@ -167,7 +167,7 @@ def SearchbyActor(lst,lst2,actor_name):
         name_director=movie['director_name']
         movie_data=sup.findmovieId(movie['id'], lst2)
         list_movies.append(movie_data['title'])
-        avgsum+=movie_data['vote_average']
+        avgsum+=float(movie_data['vote_average'])
         if name_director in dict_directors.keys():
             dict_directors[name_director]+=1
         else:
