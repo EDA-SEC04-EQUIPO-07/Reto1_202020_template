@@ -75,7 +75,7 @@ def FindGoodMovie(lst,lst2,name_director):
         movie_data=sup.findmovieId(movie['id'], lst2)
         if movie_data["vote_average"] >= 6:
             list_movies.append(movie_data['title'])
-            avgsum+=movie_data['vote_average']
+            avgsum+=int(movie_data['vote_average'])
     size=len(list_movies)
     avg=avgsum/size
     return(size,avg)
@@ -84,10 +84,35 @@ def FindGoodMovie(lst,lst2,name_director):
 
 def rankingMovies(lst, criteria, opcion):
     """
-    Genera rankings ("contruccion")
+    Genera rankings de acuerdo a las condiciones puestas.
+
+    Arg:
+        lst :: list
+            -La informacion de detallada de las peliculas.
+        criteria :: str
+            -Criterio de ordenamiento
+        opcion :: int
+            -Determina si se ordena de menor a mayor o de mayor a menor
+            1,2 respectivamente
+    
+    Retorna :: list
+        -TAD list con el catalogo pedido.
     """
     catalog=lt.newList(datastructure='ARRAY_LIST')
     lst_sort=sup.sort(lst, criteria, opcion)
+    if opcion == '1':
+        i=0
+        while i < 5:
+            movie=lt.getElement(lst_sort, i)
+            lt.addLast(catalog, movie)
+            i+=1
+    elif opcion == '2':
+        i=0
+        while i < 10:
+            movie=lt.getElement(lst, i)
+            lt.addLast(catalog, movie)
+            i+=1
+    return catalog
 
 
 
@@ -113,7 +138,7 @@ def SearchbyDirector(lst,lst2,name_director):
     for movie in info_movies:
         movie_data=sup.findmovieId(movie['id'], lst2)
         list_movies.append(movie_data['title'])
-        avgsum+=movie_data['vote_average']
+        avgsum+=int(movie_data['vote_average'])
     avg=avgsum/size
     return(list_movies,size,avg)
 
@@ -169,14 +194,25 @@ def meetGenre(lst, lst2, genre):
     i=0
     while i < size:
         list_movies.append(info_movies[i]['title'])
-        avgsum+=info_movies[i]['vote_count']
+        avgsum+=int(info_movies[i]['vote_count'])
         i+=1
     avgsum=avgsum/size
     return(list_movies, size, avgsum)
 
 
 
-#menu
+#menus
+
+def submenu2():
+    """
+    Imprime el menu de la segunda opcion
+    """
+    print('Criterios de ordenamiento:\n')
+    print('\t-1) \"vote_avarage\" : ordenar por la votacion promedio.')
+    print('\t-2) \"vote_count\" : ordenar por cantidad de votos.')
+    print('Elija un orden de ordenamiento:\n')
+    print('\t-1) Top 5 peores en el criterio seleccionado.')
+    print('\t-2) Top 10 mejores en el criterio seleccionado.')
 
 def printMenu():
     """
@@ -208,6 +244,8 @@ def main():
         inputs =input('Seleccione una opción para continuar\n') #leer opción ingresada
         if len(inputs)>0:
             if int(inputs[0])==1: #opcion 1
+                print('1- Carga la informacion del casting de las peliculas\n')
+                print('2- Carga la informacion detallada de las peliculas\n')
                 opcion=input('Selecione la lista de datos que desea cargar\n')
                 if opcion == '1':
                     lista_1=loadMovies('Data\moviesdb\MoviesCastingRaw-small.csv', lista_1)
@@ -216,18 +254,32 @@ def main():
                 else:
                     print('Esa opcion no es valida')
             elif int(inputs[0])==2: #opcion 2
-                pass
-
+                submenu2()
+                criteria=input('Escoja un criterio de ordenamiento:\n')
+                opcion=input('Escoja un orden:\n')
+                rankingMovies(lista_2, criteria, opcion)
             elif int(inputs[0])==3: #opcion 3
-                pass
-
+                director_name=input('Digite el nombre del director:\n')
+                tupla=SearchbyDirector(lista_1, lista_2, director_name)
+                tupla=(moives_director, size, avg)
+                print('La cantidad de peliculas del director son: ', str(size), 'y tiene una votacion promedio de: ', str(avg),'.')
+                print('Las peliculas en las que participo fueron:\n')
+                cadena=','.join(movies_director)
+                print(cadena)
             elif int(inputs[0])==4: #opcion 4
-                pass
-
-            elif int(inputs[0])==3: #opcion 5
-                pass
-
-            elif int(inputs[0])==4: #opcion 6
+                actor_name=input('Digite el nombre del actor:\n')
+                tupla=SearchbyActor(lista_1, lista_2, actor_name)
+                tupla=(movies_actor, size, avg, director)
+                print('La cantidad de peliculas en las que participo el actor son: ', str(size), 'y tiene una votacion promedio de: ', str(avg),'.')
+                print('El director con el que más trabajo fue: ', director)
+                print('Las peliculas en la que participo fueron:\n')
+                cadena=','.join(movies_actor)
+                print(cadena)
+            elif int(inputs[0])==5: #opcion 5
+                genre=input('Digite un genero para buscar:\n')
+                tupla=meetGenre(lista_1, lista_2, genre)
+                print(tupla)
+            elif int(inputs[0])==6: #opcion 6
                 pass
 
 

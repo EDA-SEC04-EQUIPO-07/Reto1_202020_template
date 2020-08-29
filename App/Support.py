@@ -126,10 +126,6 @@ def findmovieId(Id, lst):
     else:
         return ('No movie match with ID')
 
-def newCatalog():
-    catalog=lt.newList(datastructure='ARRAY_LIST')
-    return catalog
-
                  
 #sorting
 
