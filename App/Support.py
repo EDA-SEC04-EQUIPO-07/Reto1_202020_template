@@ -7,19 +7,17 @@ from DataStructures import liststructure as lt
 
 #sorted implementado
 
-def sort(lst, criteria, opcion):
-    if criteria.lower() == 'vote':
-        return('Sea mas especifico con el criterio.') 
-    elif criteria.lower() in 'vote_average':
+def sort(lst, criteria, opcion): 
+    if criteria.lower() in 'vote_average':
         if opcion == '1':
-            sup.mergesort(lst, lessfunction='lessfunctionAvrg')
+            mergesort(lst, lessfunction='lessfunctionAvrg')
         elif opcion == '2':
-            sup.mergesort(lst, lessfunction='greaterfunctionAvrg')
+            mergesort(lst, lessfunction='greaterfunctionAvrg')
     elif criteria.lower() in 'vote_count':
         if opcion == '1':
-            sup.mergesort(lst, lessfunction='lessfunctionCount')
+            mergesort(lst, lessfunction='lessfunctionCount')
         elif opcion == '2':
-            sup.mergesort(lst, lessfunction='greaterfunctionCount')
+            mergesort(lst, lessfunction='greaterfunctionCount')
 
 #sorted
 

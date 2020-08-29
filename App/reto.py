@@ -99,18 +99,18 @@ def rankingMovies(lst, criteria, opcion):
         -TAD list con el catalogo pedido.
     """
     catalog=lt.newList(datastructure='ARRAY_LIST')
-    lst_sort=sup.sort(lst, criteria, opcion)
+    sup.sort(lst, criteria, opcion)
     if opcion == '1':
         i=0
         while i < 5:
-            movie=lt.getElement(lst_sort, i)
-            lt.addLast(catalog, movie)
+            movie=lt.getElement(lst, i)
+            lt.addLast(catalog, movie['title'])
             i+=1
     elif opcion == '2':
         i=0
         while i < 10:
             movie=lt.getElement(lst, i)
-            lt.addLast(catalog, movie)
+            lt.addLast(catalog, movie['title'])
             i+=1
     return catalog
 
@@ -210,7 +210,7 @@ def submenu2():
     Imprime el menu de la segunda opcion
     """
     print('Criterios de ordenamiento:\n')
-    print('\t-1) \"vote_avarage\" : ordenar por la votacion promedio.')
+    print('\t-1) \"vote_average\" : ordenar por la votacion promedio.')
     print('\t-2) \"vote_count\" : ordenar por cantidad de votos.')
     print('Elija un orden de ordenamiento:\n')
     print('\t-1) Top 5 peores en el criterio seleccionado.')
@@ -259,7 +259,45 @@ def main():
                 submenu2()
                 criteria=input('Escoja un criterio de ordenamiento:\n')
                 opcion=input('Escoja un orden:\n')
-                rankingMovies(lista_2, criteria, opcion)
+                if criteria == '1':
+                    if opcion == '1':
+                        worst_5=rankingMovies(lista_2, criteria, opcion)
+                        cadena=','.join(worst_5)
+                        print('Las peores 5 peliculas segun su votacion promedio son: ', cadena)
+                        i=0
+                        while i < lt.size(worst_5):
+                            print(lt.getElement(worst_5,i))
+                            i+=1       
+                    elif opcion == '2':
+                        best_10=rankingMovies(lista_2, criteria, opcion)
+                        cadena=','.join(best_10)
+                        print('Las mejores 10 peliculas segun su votacion promedio son: ', cadena)
+                        i=0
+                        while i < lt.size(best_10):
+                            print(lt.getElement(best_10,i))
+                            i+=1
+                    else:
+                        print('La opcion: \"', opcion,'\" no es una opcion valida')
+                elif criteria == '2':
+                    if opcion == '1':
+                        worst_5=rankingMovies(lista_2, criteria, opcion)
+                        cadena=','.join(worst_5)
+                        print('Las peores 5 peliculas segun su cantidad de votos son: ')
+                        i=0
+                        while i < lt.size(worst_5):
+                            print(lt.getElement(worst_5,i))
+                            i+=1       
+                    elif opcion == '2':
+                        best_10=rankingMovies(lista_2, criteria, opcion)
+                        print('Las mejores 10 peliculas segun su cantidad de votos son: ')
+                        i=0
+                        while i < lt.size(best_10):
+                            print(lt.getElement(best_10,i))
+                            i+=1
+                    else:
+                        print('La opcion: \"', opcion,'\" no es una opcion valida')
+                else:
+                    print(criteria, 'No es una opcion valida.')
             elif int(inputs[0])==3: #opcion 3
                 director_name=input('Digite el nombre del director:\n')
                 (movies_director, size, avg)=SearchbyDirector(lista_1, lista_2, director_name)
