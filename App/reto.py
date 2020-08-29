@@ -289,7 +289,7 @@ def main():
                             i+=1       
                     elif opcion == '2':
                         best_10=rankingMovies(lista_2, criteria, opcion)
-                        print('Las mejores 10 peliculas segun su cantidad de votos son: ')
+                        print('Las mejores 10 peliculas segun su cantidad de votos }son: ')
                         i=0
                         while i < lt.size(best_10):
                             print(lt.getElement(best_10,i))
