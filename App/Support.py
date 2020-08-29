@@ -75,7 +75,7 @@ def findmoviesDirector(director_name, lst):
     while it.hasNext(iterator):
         movie= it.next(iterator)
         if director_name.lower() in movie['director_name'].lower():
-            info_movies.append(movie["id"])
+            info_movies.append(movie)
     return info_movies
 
 def findmoviesActor(actor_name, lst):

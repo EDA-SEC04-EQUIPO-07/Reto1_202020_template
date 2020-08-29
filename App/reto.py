@@ -162,6 +162,8 @@ def SearchbyActor(lst,lst2,actor_name):
     list_movies=[]
     dict_directors={}
     for movie in info_movies:
+        print(movie)
+        print(size)
         name_director=movie['director_name']
         movie_data=sup.findmovieId(movie['id'], lst2)
         list_movies.append(movie_data['title'])
@@ -171,7 +173,7 @@ def SearchbyActor(lst,lst2,actor_name):
         else:
             dict_directors[name_director]=1
     director= max(dict_directors)
-    avg=avgsum/size
+    avg=round(avgsum/size,2) 
     return(list_movies,size,avg,director)
 
 def meetGenre(lst, lst2, genre):
@@ -194,9 +196,9 @@ def meetGenre(lst, lst2, genre):
     i=0
     while i < size:
         list_movies.append(info_movies[i]['title'])
-        avgsum+=int(info_movies[i]['vote_count'])
+        avgsum+=float(info_movies[i]['vote_count'])
         i+=1
-    avgsum=avgsum/size
+    avgsum=round(avgsum/size,2)
     return(list_movies, size, avgsum)
 
 
@@ -260,16 +262,14 @@ def main():
                 rankingMovies(lista_2, criteria, opcion)
             elif int(inputs[0])==3: #opcion 3
                 director_name=input('Digite el nombre del director:\n')
-                tupla=SearchbyDirector(lista_1, lista_2, director_name)
-                tupla=(moives_director, size, avg)
+                (movies_director, size, avg)=SearchbyDirector(lista_1, lista_2, director_name)
                 print('La cantidad de peliculas del director son: ', str(size), 'y tiene una votacion promedio de: ', str(avg),'.')
                 print('Las peliculas en las que participo fueron:\n')
                 cadena=','.join(movies_director)
                 print(cadena)
             elif int(inputs[0])==4: #opcion 4
                 actor_name=input('Digite el nombre del actor:\n')
-                tupla=SearchbyActor(lista_1, lista_2, actor_name)
-                tupla=(movies_actor, size, avg, director)
+                (movies_actor, size, avg, director)=SearchbyActor(lista_1, lista_2, actor_name)         
                 print('La cantidad de peliculas en las que participo el actor son: ', str(size), 'y tiene una votacion promedio de: ', str(avg),'.')
                 print('El director con el que más trabajo fue: ', director)
                 print('Las peliculas en la que participo fueron:\n')
@@ -277,8 +277,12 @@ def main():
                 print(cadena)
             elif int(inputs[0])==5: #opcion 5
                 genre=input('Digite un genero para buscar:\n')
-                tupla=meetGenre(lista_1, lista_2, genre)
-                print(tupla)
+                (movies_genre, size, avg)=meetGenre(lista_1, lista_2, genre)
+                print('La cantidad de peliculas encontradad para el genero: \"', genre,'\" son: ', str(size), 'y tiene una votacion promedio de: ', str(avg),'.')
+                print('Los titulos son:\n')
+                cadena=','.join(movies_genre)
+                print(cadena)
+
             elif int(inputs[0])==6: #opcion 6
                 pass
 
