@@ -46,7 +46,6 @@ def compareRecordIds(recordA, recordB):
         return 1
     return -1
 
-
 def loadCSVFile (file, lst):
     lst=lt.newList(datastructure="ARRAY_LIST")
     dialect = csv.excel()
@@ -59,7 +58,6 @@ def loadCSVFile (file, lst):
     except:
         print("Hubo un error con la carga del archivo")
     return lst
-
 
 def loadMovies (file, lst):
     lst = loadCSVFile(file, lst) 
@@ -79,8 +77,6 @@ def FindGoodMovie(lst,lst2,name_director):
     size=len(list_movies)
     avg=avgsum/size
     return(size,avg)
-
-
 
 def rankingMovies(lst, criteria, opcion):
     """
@@ -113,8 +109,6 @@ def rankingMovies(lst, criteria, opcion):
             lt.addLast(catalog, movie['title'])
             i+=1
     return catalog
-
-
 
 def SearchbyDirector(lst,lst2,name_director):
     """
@@ -207,14 +201,21 @@ def meetGenre(lst, lst2, genre):
 
 def submenu2():
     """
-    Imprime el menu de la segunda opcion
+    Imprime el menu de la segunda opcion.
     """
     print('Criterios de ordenamiento:\n')
     print('\t-1) \"vote_average\" : ordenar por la votacion promedio.')
-    print('\t-2) \"vote_count\" : ordenar por cantidad de votos.')
+    print('\t-2) \"vote_count\" : ordenar por cantidad de votos.\n')
     print('Elija un orden de ordenamiento:\n')
     print('\t-1) Top 5 peores en el criterio seleccionado.')
-    print('\t-2) Top 10 mejores en el criterio seleccionado.')
+    print('\t-2) Top 10 mejores en el criterio seleccionado.\n')
+
+def submenu1():
+    """
+    Imprime el menu de la primera opcion.
+    """
+    print('1- Carga la informacion del casting de las peliculas\n')
+    print('2- Carga la informacion detallada de las peliculas\n')
 
 def printMenu():
     """
@@ -243,12 +244,11 @@ def main():
     worst_5=[]
     while True:
         printMenu() #imprimir el menu de opciones en consola
-        inputs =input('Seleccione una opción para continuar\n') #leer opción ingresada
+        inputs =input('Seleccione una opción para continuar:\n') #leer opción ingresada
         if len(inputs)>0:
             if int(inputs[0])==1: #opcion 1
-                print('1- Carga la informacion del casting de las peliculas\n')
-                print('2- Carga la informacion detallada de las peliculas\n')
-                opcion=input('Selecione la lista de datos que desea cargar\n')
+                submenu1()
+                opcion=input('Selecione la lista de datos que desea cargar:\n')
                 if opcion == '1':
                     lista_1=loadMovies('Data\moviesdb\MoviesCastingRaw-small.csv', lista_1)
                 elif opcion == '2':
@@ -320,7 +320,6 @@ def main():
                 print('Los titulos son:\n')
                 cadena=','.join(movies_genre)
                 print(cadena)
-
             elif int(inputs[0])==6: #opcion 6
                 pass
 
