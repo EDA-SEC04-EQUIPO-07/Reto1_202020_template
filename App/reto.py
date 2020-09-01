@@ -201,7 +201,7 @@ def meetGenre(lst, lst2, genre):
     avgsum=round(avgsum/size,2)
     return(list_movies, size, avgsum)
 
-def moviesbygenre(lst2,genre,opcion,criteria)
+def moviesbygenre(lst2,genre,opcion,criteria):
     
     avgsum=0
     listbygenre=sup.findmoviesGenre(genre,lst2)
