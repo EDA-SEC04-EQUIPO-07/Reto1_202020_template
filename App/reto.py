@@ -301,23 +301,23 @@ def main():
                 (movies_director, size, avg)=SearchbyDirector(lista_1, lista_2, director_name)
                 print('La cantidad de peliculas del director son: ', str(size), 'y tiene una votacion promedio de: ', str(avg),'.')
                 print('Las peliculas en las que participo fueron:\n')
-                cadena=','.join(movies_director)
-                print(cadena)
+                for movie in movies_director:
+                    print(movie)
             elif int(inputs[0])==4: #opcion 4
                 actor_name=input('Digite el nombre del actor:\n')
                 (movies_actor, size, avg, director)=SearchbyActor(lista_1, lista_2, actor_name)         
                 print('La cantidad de peliculas en las que participo el actor son: ', str(size), 'y tiene una votacion promedio de: ', str(avg),'.')
                 print('El director con el que más trabajo fue: ', director)
                 print('Las peliculas en la que participo fueron:\n')
-                cadena=','.join(movies_actor)
-                print(cadena)
+                for movie in movies_actor:
+                    print(movies_actor)
             elif int(inputs[0])==5: #opcion 5
                 genre=input('Digite un genero para buscar:\n')
                 (movies_genre, size, avg)=meetGenre(lista_1, lista_2, genre)
                 print('La cantidad de peliculas encontradad para el genero: \"', genre,'\" son: ', str(size), 'y tiene una votacion promedio de: ', str(avg),'.')
                 print('Los titulos son:\n')
-                cadena=','.join(movies_genre)
-                print(cadena)
+                for movie in movies_genre:
+                    print(movie)
             elif int(inputs[0])==6: #opcion 6
                 pass
 
