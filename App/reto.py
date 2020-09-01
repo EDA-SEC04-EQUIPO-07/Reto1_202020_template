@@ -156,8 +156,6 @@ def SearchbyActor(lst,lst2,actor_name):
     list_movies=[]
     dict_directors={}
     for movie in info_movies:
-        print(movie)
-        print(size)
         name_director=movie['director_name']
         movie_data=sup.findmovieId(movie['id'], lst2)
         list_movies.append(movie_data['title'])
