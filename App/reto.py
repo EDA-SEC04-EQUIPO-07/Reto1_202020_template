@@ -362,7 +362,6 @@ def main():
                 print(cadena)
 
             elif int(inputs[0])==6: #opcion 6
-                submenu3()
                 genre= input("Escoja un género:\n")
                 criteria=input('Escoja un criterio de ordenamiento:\n')
                 opcion=input('Escoja un orden:\n')
