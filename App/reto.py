@@ -201,26 +201,46 @@ def meetGenre(lst, lst2, genre):
     avgsum=round(avgsum/size,2)
     return(list_movies, size, avgsum)
 
-def moviesbygenre(lst2,genre,opcion,criteria)
+def moviesbygenre(lst2,genre,opcion,criteria):
+     """
+    Genera rankings de acuerdo a las condiciones puestas.
+
+    Arg:
+        lst2 :: list
+            -La informacion de detallada de las peliculas.
+        genre: str
+            - Genero de la pelícla
+        criteria :: str
+            -Criterio de ordenamiento(vote_)
+        opcion :: int
+            -Determina si se ordena de menor a mayor o de mayor a menor
+            1,2 respectivamente
     
-    avgsum=0
+    Retorna :: list
+        -TAD list con el catalogo pedido.
+        -float: promedio de votos
+    """
+    
+    catalog=lt.newList(datastructure='ARRAY_LIST')
     listbygenre=sup.findmoviesGenre(genre,lst2)
+    sup.sort(listbygenre, criteria, opcion)
+    avgsum=0
     if opcion == '1':
         i=0
         while i < 5:
-            movie=lt.getElement(lst2, i)
-            lt.addLast(listbygenre, movie['title'])
-            avgsum+=float(info_movies[i]['vote_count'])
+            movie=lt.getElement(listbygenere, i)
+            lt.addLast(catalog, movie['title'])
+            avgsum+=float(info_movies[i][criteria])
             i+=1
     elif opcion == '2':
         i=0
         while i < 10:
-            movie=lt.getElement(lst2, i)
+            movie=lt.getElement(listbygenre, i)
             lt.addLast(listbygenre, movie['title'])
-            avgsum+=float(info_movies[i]['vote_count'])
+            avgsum+=float(info_movies[i][criteria])
             i+=1
     avgprom= avgsum/i
-    return (listbygenre,avgprom)
+    return (catalog,avgprom)
 
 
 #menus
