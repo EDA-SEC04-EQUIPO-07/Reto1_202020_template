@@ -408,6 +408,5 @@ def main():
             elif int(inputs[0])==0: #opcion 0, salir
                 sys.exit(0)
                 
-
 if __name__ == "__main__":
     main()
