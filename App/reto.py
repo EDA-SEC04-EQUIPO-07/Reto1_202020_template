@@ -238,8 +238,10 @@ def main():
     """
     lista_1=[]
     lista_2=[]
-    best_10=[]
-    worst_5=[]
+    best_10_va=[]
+    worst_5_va=[]
+    best_10_vc=[]
+    worst_5_vc=[]
     while True:
         printMenu() #imprimir el menu de opciones en consola
         inputs =input('Seleccione una opción para continuar:\n') #leer opción ingresada
@@ -259,38 +261,35 @@ def main():
                 opcion=input('Escoja un orden:\n')
                 if criteria == '1':
                     if opcion == '1':
-                        worst_5=rankingMovies(lista_2, criteria, opcion)
-                        cadena=','.join(worst_5)
-                        print('Las peores 5 peliculas segun su votacion promedio son: ', cadena)
+                        worst_5_va=rankingMovies(lista_2, criteria, opcion)
+                        print('Las peores 5 peliculas segun su votacion promedio son: ')
                         i=0
-                        while i < lt.size(worst_5):
-                            print(lt.getElement(worst_5,i))
+                        while i < lt.size(worst_5_va):
+                            print(lt.getElement(worst_5_va,i))
                             i+=1       
                     elif opcion == '2':
-                        best_10=rankingMovies(lista_2, criteria, opcion)
-                        cadena=','.join(best_10)
-                        print('Las mejores 10 peliculas segun su votacion promedio son: ', cadena)
+                        best_10_va=rankingMovies(lista_2, criteria, opcion)
+                        print('Las mejores 10 peliculas segun su votacion promedio son: ')
                         i=0
-                        while i < lt.size(best_10):
-                            print(lt.getElement(best_10,i))
+                        while i < lt.size(best_10_va):
+                            print(lt.getElement(best_10_va,i))
                             i+=1
                     else:
                         print('La opcion: \"', opcion,'\" no es una opcion valida')
                 elif criteria == '2':
                     if opcion == '1':
-                        worst_5=rankingMovies(lista_2, criteria, opcion)
-                        cadena=','.join(worst_5)
+                        worst_5_vc=rankingMovies(lista_2, criteria, opcion)
                         print('Las peores 5 peliculas segun su cantidad de votos son: ')
                         i=0
-                        while i < lt.size(worst_5):
-                            print(lt.getElement(worst_5,i))
+                        while i < lt.size(worst_5_vc):
+                            print(lt.getElement(worst_5_vc,i))
                             i+=1       
                     elif opcion == '2':
-                        best_10=rankingMovies(lista_2, criteria, opcion)
+                        best_10_vc=rankingMovies(lista_2, criteria, opcion)
                         print('Las mejores 10 peliculas segun su cantidad de votos son: ')
                         i=0
-                        while i < lt.size(best_10):
-                            print(lt.getElement(best_10,i))
+                        while i < lt.size(best_10_vc):
+                            print(lt.getElement(best_10_vc,i))
                             i+=1
                     else:
                         print('La opcion: \"', opcion,'\" no es una opcion valida')
