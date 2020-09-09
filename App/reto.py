@@ -46,6 +46,7 @@ def compareRecordIds(recordA, recordB):
         return 1
     return -1
 
+
 def loadCSVFile (file, lst):
     lst=lt.newList(datastructure="ARRAY_LIST")
     dialect = csv.excel()
@@ -58,6 +59,7 @@ def loadCSVFile (file, lst):
     except:
         print("Hubo un error con la carga del archivo")
     return lst
+
 
 def loadMovies (file, lst):
     lst = loadCSVFile(file, lst) 
@@ -77,6 +79,8 @@ def FindGoodMovie(lst,lst2,name_director):
     size=len(list_movies)
     avg=avgsum/size
     return(size,avg)
+
+
 
 def rankingMovies(lst, criteria, opcion):
     """
@@ -109,6 +113,8 @@ def rankingMovies(lst, criteria, opcion):
             lt.addLast(catalog, movie['title'])
             i+=1
     return catalog
+
+
 
 def SearchbyDirector(lst,lst2,name_director):
     """
@@ -156,6 +162,8 @@ def SearchbyActor(lst,lst2,actor_name):
     list_movies=[]
     dict_directors={}
     for movie in info_movies:
+        print(movie)
+        print(size)
         name_director=movie['director_name']
         movie_data=sup.findmovieId(movie['id'], lst2)
         list_movies.append(movie_data['title'])
@@ -193,24 +201,57 @@ def meetGenre(lst, lst2, genre):
     avgsum=round(avgsum/size,2)
     return(list_movies, size, avgsum)
 
+def moviesbygenre(lst2,genre,opcion,criteria):
+    
+    avgsum=0
+    listbygenre=sup.findmoviesGenre(genre,lst2)
+    if opcion == '1':
+        i=0
+        while i < 5:
+            movie=lt.getElement(lst2, i)
+            lt.addLast(listbygenre, movie['title'])
+            avgsum+=float(info_movies[i]['vote_count'])
+            i+=1
+    elif opcion == '2':
+        i=0
+        while i < 10:
+            movie=lt.getElement(lst2, i)
+            lt.addLast(listbygenre, movie['title'])
+            avgsum+=float(info_movies[i]['vote_count'])
+            i+=1
+    avgprom= avgsum/i
+    return (listbygenre,avgprom)
 
 
 #menus
 
-def submenu2():
+def submenu3():
     """
-    Imprime el menu de la segunda opcion.
+    Imprime las opciones de la tercera opcion.
     """
     print('Criterios de ordenamiento:\n')
     print('\t-1) \"vote_average\" : ordenar por la votacion promedio.')
-    print('\t-2) \"vote_count\" : ordenar por cantidad de votos.\n')
+    print('\t-2) \"vote_count\" : ordenar por cantidad de votos.')
     print('Elija un orden de ordenamiento:\n')
     print('\t-1) Top 5 peores en el criterio seleccionado.')
-    print('\t-2) Top 10 mejores en el criterio seleccionado.\n')
+    print('\t-2) Top 10 mejores en el criterio seleccionado.')
+    print('Tambien debe dar el genero que desea filtrar.')
+
+
+def submenu2():
+    """
+    Imprime el menu de la segunda opcion
+    """
+    print('Criterios de ordenamiento:\n')
+    print('\t-1) \"vote_average\" : ordenar por la votacion promedio.')
+    print('\t-2) \"vote_count\" : ordenar por cantidad de votos.')
+    print('Elija un orden de ordenamiento:\n')
+    print('\t-1) Top 5 peores en el criterio seleccionado.')
+    print('\t-2) Top 10 mejores en el criterio seleccionado.')
 
 def submenu1():
     """
-    Imprime el menu de la primera opcion.
+    Imrime el meni de la primera opcion.
     """
     print('1- Carga la informacion del casting de las peliculas\n')
     print('2- Carga la informacion detallada de las peliculas\n')
@@ -244,11 +285,11 @@ def main():
     worst_5_vc=[]
     while True:
         printMenu() #imprimir el menu de opciones en consola
-        inputs =input('Seleccione una opción para continuar:\n') #leer opción ingresada
+        inputs =input('Seleccione una opción para continuar\n') #leer opción ingresada
         if len(inputs)>0:
             if int(inputs[0])==1: #opcion 1
                 submenu1()
-                opcion=input('Selecione la lista de datos que desea cargar:\n')
+                opcion=input('Selecione la lista de datos que desea cargar\n')
                 if opcion == '1':
                     lista_1=loadMovies('Data\moviesdb\MoviesCastingRaw-small.csv', lista_1)
                 elif opcion == '2':
@@ -261,7 +302,7 @@ def main():
                 opcion=input('Escoja un orden:\n')
                 if criteria == '1':
                     if opcion == '1':
-                        worst_5_va=rankingMovies(lista_2, criteria, opcion)
+                        worst_5_va=moviesbygenre(lst2, genre, opcion, criteria)
                         print('Las peores 5 peliculas segun su votacion promedio son: ')
                         i=0
                         while i < lt.size(worst_5_va):
@@ -318,7 +359,46 @@ def main():
                 for movie in movies_genre:
                     print(movie)
             elif int(inputs[0])==6: #opcion 6
-                pass
+                submenu3()
+                criteria=input('Escoja un criterio de ordenamiento:\n')
+                opcion=input('Escoja un orden:\n')
+                if criteria == '1':
+                    if opcion == '1':
+                        worst_5_va=moviesbygenre(lst2, genre, opcion, criteria)
+                        print('Las peores 5 peliculas segun su votacion promedio son: ')
+                        i=0
+                        while i < lt.size(worst_5_va):
+                            print(lt.getElement(worst_5_va,i))
+                            i+=1       
+                    elif opcion == '2':
+                        best_10_va=moviesbygenre(lst2, genre, opcion, criteria)
+                        print('Las mejores 10 peliculas segun su votacion promedio son: ')
+                        i=0
+                        while i < lt.size(best_10_va):
+                            print(lt.getElement(best_10_va,i))
+                            i+=1
+                    else:
+                        print('La opcion: \"', opcion,'\" no es una opcion valida')
+                elif criteria == '2':
+                    if opcion == '1':
+                        worst_5_vc=moviesbygenre(lst2, genre, opcion, criteria)
+                        print('Las peores 5 peliculas segun su cantidad de votos son: ')
+                        i=0
+                        while i < lt.size(worst_5_vc):
+                            print(lt.getElement(worst_5_vc,i))
+                            i+=1       
+                    elif opcion == '2':
+                        best_10_vc=moviesbygenre(lst2, genre, opcion, criteria)
+                        print('Las mejores 10 peliculas segun su cantidad de votos son: ')
+                        i=0
+                        while i < lt.size(best_10_vc):
+                            print(lt.getElement(best_10_vc,i))
+                            i+=1
+                    else:
+                        print('La opcion: \"', opcion,'\" no es una opcion valida')
+                else:
+                    print(criteria, 'No es una opcion valida.')
+                
 
 
             elif int(inputs[0])==0: #opcion 0, salir
