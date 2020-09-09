@@ -22,8 +22,8 @@ def sort(lst, criteria, opcion):
 #sorted
 
 def lessfunctionCount(element1, element2):
-    element1=element1['vote_count']
-    element2=element2['vote_count']
+    element1=float(element1['vote_count'])
+    element2=float(element2['vote_count'])
     if element1 == element2:
         return 0
     elif element1 < element2:
@@ -32,8 +32,8 @@ def lessfunctionCount(element1, element2):
         return -1
 
 def greaterfunctionCount(element1, element2):
-    element1=element1['vote_count']
-    element2=element2['vote_count']
+    element1=float(element1['vote_count'])
+    element2=float(element2['vote_count'])
     if element1 == element2:
         return 0
     elif element1 > element2:
@@ -42,8 +42,8 @@ def greaterfunctionCount(element1, element2):
         return -1
 
 def lessfunctionAvrg(element1, element2):
-    element1=element1['vote_average']
-    element2=element2['vote_average']
+    element1=float(element1['vote_count'])
+    element2=float(element2['vote_count'])
     if element1 < element2:
         return 1
     elif element1 == element2:
@@ -52,8 +52,8 @@ def lessfunctionAvrg(element1, element2):
         return -1
 
 def greaterfunctionAvrg(element1, element2):
-    element1=element1['vote_average']
-    element2=element2['vote_average']
+    element1=float(element1['vote_count'])
+    element2=float(element2['vote_count'])
     if element1 > element2:
         return 1
     elif element1 == element2:
